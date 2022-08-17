@@ -1,8 +1,11 @@
+ var subtitle="Online SHopping";
+
 class HeaderComponent extends React.Component {
+    title= "Amazon Shopping";
     render() {
         return (
             <>
-                <h1>Amazon Shopping</h1>
+                <h1>{this.title} - {subtitle}</h1>
             </>
         )
     }
@@ -24,7 +27,7 @@ class FooterComponent extends React.Component {
     render() {
         return (
             <>
-                <div className="bg-dark text-white text-center">
+                <div className="text-dark text-center">
                     &copy; copyright 2022 @Voicera
                 </div>
             </>
