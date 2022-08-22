@@ -2,16 +2,16 @@ class ProductComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            product:{
+            product: {
                 name: '',
                 price: ''
             }
         }
-        this.nameChanged=this.nameChanged.bind(this);
-        this.priceChanged=this.priceChanged.bind(this);
+        this.nameChanged = this.nameChanged.bind(this);
+        this.priceChanged = this.priceChanged.bind(this);
     }
-    
-    nameChanged(event){
+
+    nameChanged(event) {
         this.setState({
             product: {
                 name: event.target.value,
@@ -19,7 +19,7 @@ class ProductComponent extends React.Component {
             }
         })
     }
-    priceChanged(event){
+    priceChanged(event) {
         this.setState({
             product: {
                 name: this.state.product.name,
