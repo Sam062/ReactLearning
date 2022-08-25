@@ -15,7 +15,7 @@ const YupValidationComponent = () => {
             Salary: yup.number().required("Salary required.").typeError("Invalid Salary"),
             Email: yup.string().required("Email required.").email("Invalid Email.")
         }),
-        onSubmit: values=>{
+        onSubmit: values => {
             alert(JSON.stringify(values));
         }
     })
@@ -29,19 +29,19 @@ const YupValidationComponent = () => {
                         <dd>
                             <input className="form-control" type="text" name="Name" {...formik.getFieldProps("Name")} />
                         </dd>
-                        <dd className="text-danger">{(formik.touched.Name && formik.errors.Name)?formik.errors.Name:null}</dd>
+                        <dd className="text-danger">{(formik.touched.Name && formik.errors.Name) ? formik.errors.Name : null}</dd>
 
                         <dt>Salary</dt>
                         <dd>
                             <input className="form-control" type="text" name="Salary" {...formik.getFieldProps("Salary")} />
                         </dd>
-                        <dd className="text-danger">{(formik.touched.Salary && formik.errors.Salary)?formik.errors.Salary:null}</dd>
+                        <dd className="text-danger">{(formik.touched.Salary && formik.errors.Salary) ? formik.errors.Salary : null}</dd>
 
                         <dt>Email</dt>
                         <dd>
                             <input className="form-control" type="email" name="Email" {...formik.getFieldProps("Email")} />
                         </dd>
-                        <dd className="text-danger">{(formik.touched.Email && formik.errors.Email)?formik.errors.Email:null}</dd>
+                        <dd className="text-danger">{(formik.touched.Email && formik.errors.Email) ? formik.errors.Email : null}</dd>
                     </dl>
                     <div className="d-grid">
                         <button className="btn btn-success">Register</button>
