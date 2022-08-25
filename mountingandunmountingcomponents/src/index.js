@@ -4,11 +4,13 @@ import './index.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import reportWebVitals from './reportWebVitals';
 import MountAndUnmountComponent from './components/MountAndUnmountComponent';
+import MountAndUnmountExampleComp from './components/MountAndUnmountExampleComp';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <MountAndUnmountComponent />
+    {/* <MountAndUnmountComponent /> */}
+    <MountAndUnmountExampleComp />
   </React.StrictMode>
 );
 
