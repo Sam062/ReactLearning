@@ -15,7 +15,7 @@ function App() {
         <div>
           <Routes>
             <Route exact path='/' element={<ContactListComponent />} />
-            <Route path='/loadDummyComponent'  element={<MyDummyComponent />} />
+            {/* <Route path='/addContactList'  element={<MyDummyComponent />} /> */}
             <Route exact path="/addContactList" element={<CreateContactListComponent />} />
           </Routes>
           <FooterComponent />

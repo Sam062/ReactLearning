@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 
 import LoginComponent from './LoginComponent';
+import ErrorComponent from './ErrorComponent';
 
 const HomeComponent = () => {
     return <>
@@ -30,11 +31,13 @@ export class RoutingComponent extends React.Component {
                     </div>
                 </header>
                 <hr />
-
+ 
                 <Routes>
-                    <Route path='/home' element={<HomeComponent />} />
+                    <Route path='/' element={<HomeComponent />} />
+                    <Route path='/home' element={<HomeComponent />}/>
                     <Route path='/contactus' element={<ContactUsComponent />} />
                     <Route path='/login' element={<LoginComponent />} />
+                    <Route path='*' element={<ErrorComponent />} />
                 </Routes>
             </Router>
         )

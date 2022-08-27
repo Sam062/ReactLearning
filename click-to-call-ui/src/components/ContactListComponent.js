@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ContactListService from '../service/ContactListService';
+import {Link} from 'react-router-dom';
 
 class ContactListComponent extends Component {
     constructor(props) {
@@ -46,7 +47,7 @@ class ContactListComponent extends Component {
             <div>
                 <h2 className='display-5'>Contact Lists</h2>
                 <div>
-                    <button className='btn btn-success' onClick={this.createContactList}>Add List</button>
+                    <Link to="/addContactList">Add Contact List</Link>
                 </div>
                 <div>
                     <table className="table table-hover">
