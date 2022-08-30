@@ -1,8 +1,6 @@
-import React, { Component } from 'react'
-import ContactListService from '../service/ContactListService';
-import { useFormik } from 'formik';
+import React  from 'react';
 import axios from 'axios';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 export default class DialerComponent extends React.Component {
     constructor(props) {
@@ -26,36 +24,16 @@ export default class DialerComponent extends React.Component {
         this.getAllDialerData();
     }
 
-    // deleteDialerData(id) {
-    //     let flag = window.confirm("Are you sure?");
-    //     if (flag) {
-    //         ContactListService.deleteContactList(id).then(response => {
-    //             this.setState({ msg: (response.data == 'SUCCESS') ? 'Deleted Successfully' : response.msg });
-    //             this.getAllContactLists();
-    //         })
-    //     }
-    // }
-
-    // editContactList(id) {
-    //     alert("edit called = " + id);
-    // }
-    // createContactList() {
-    //     alert(this.form.data);
-    //     ContactListService.createContactList();
-    // }
-
     dialNumber(countryCode, mobile) {
         let flag = window.confirm('Are you sure to dial ' + countryCode + mobile);
         if (flag) {
-            // let dialStatusBoxElement=document.getElementById('dialStatusBox').style.display='none';
-            // alert(dialStatusBoxElement)
             axios.get("http://localhost:9695/handledial?countryCode=" + encodeURIComponent(countryCode) + "&number=" + mobile)
             .then((response)=>{
-                // alert(response.data);
                 this.setState({
                     dialStatus: response.data
                 })
             });
+            Navigate("/");
         }else{
             this.setState({
                 dialStatus: ''
@@ -76,7 +54,6 @@ export default class DialerComponent extends React.Component {
                 <table className="table table-hover">
                     <thead className='bg-info text-white'>
                         <tr>
-                            {/* <th>ID</th> */}
                             <th>Name</th>
                             <th>Email</th>
                             <th>Mobile-1</th>
@@ -91,7 +68,6 @@ export default class DialerComponent extends React.Component {
                         {
                             this.state.dialerList.map(list => {
                                 return <tr key={list.dialerId}>
-                                    {/* <td>{list.dialerId}</td> */}
                                     <td>{list.name}</td>
                                     <td>{list.email}</td>
                                     <td>{list.countryCode}{list.mobile1}</td>

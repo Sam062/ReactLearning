@@ -172,7 +172,6 @@ export class ContactLists extends React.Component {
 
 export function AddContactList() {
     const [getMsg, setMsg] = React.useState("");
-    const show = false;
     const history=useNavigate();
     const formik = useFormik({
         initialValues: {
