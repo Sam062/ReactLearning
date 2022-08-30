@@ -12,6 +12,10 @@ class CampaignListService{
         return axios.delete(`${URL}/deleteContactList/${id}`);
     }
 
+    addContactList(data){
+        return axios.post(`${URL}/saveOrUpdateContactList`, data);
+    }
+
 }
 
 export default new CampaignListService();
