@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 
@@ -28,13 +28,13 @@ export default class DialerComponent extends React.Component {
         let flag = window.confirm('Are you sure to dial ' + countryCode + mobile);
         if (flag) {
             axios.get("http://localhost:9695/handledial?countryCode=" + encodeURIComponent(countryCode) + "&number=" + mobile)
-            .then((response)=>{
-                this.setState({
-                    dialStatus: response.data
-                })
-            });
+                .then((response) => {
+                    this.setState({
+                        dialStatus: response.data
+                    })
+                });
             Navigate("/");
-        }else{
+        } else {
             this.setState({
                 dialStatus: ''
             })
@@ -47,10 +47,10 @@ export default class DialerComponent extends React.Component {
             <div className='mt-2 bg-light'>
                 <h1 className='display-6 text-center'>Dialer Lists</h1>
                 {
-                this.state.dialStatus && (
-                    <div id='dialStatusBox' className={(this.state.dialStatus!='Failed to dial')?'alert alert-success text-center':'alert alert-danger text-center'}>{this.state.dialStatus}</div>
-                )
-            }
+                    this.state.dialStatus && (
+                        <div id='dialStatusBox' className={(this.state.dialStatus !== 'Failed to dial') ? 'alert alert-success text-center' : 'alert alert-danger text-center'}>{this.state.dialStatus}</div>
+                    )
+                }
                 <table className="table table-hover">
                     <thead className='bg-info text-white'>
                         <tr>

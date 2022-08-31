@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -10,17 +10,17 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 export default class HeaderComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isActive: false
-    }
-    this.handleClick = this.handleClick.bind(this);
+    // this.state = {
+    //   isActive: false
+    // }
+    // this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick() {
-    this.setState({
-      isActive: true
-    })
-  }
+  // handleClick() {
+  //   this.setState({
+  //     isActive: true
+  //   })
+  // }
   render() {
     return (
       <div className='mt-1'>
@@ -53,7 +53,7 @@ export default class HeaderComponent extends Component {
             </div>
           </nav> */}
 
-        <Navbar bg="light" expand="lg">
+        <Navbar bg="light" expand="sm">
           <Container>
             <Navbar.Brand>
               <Link to="/" className='btn text-muted' style={{ "marginLeft": "-4rem" }}>

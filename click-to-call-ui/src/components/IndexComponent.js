@@ -6,9 +6,9 @@ import FooterComponent from './FooterComponent';
 import ContactListComponent from './ContactListComponent';
 import ContactsComponent from './ContactsComponent';
 import HomeComponent from './HomeComponent';
-import {AddContactList} from './ContactListComponent';
-import {ContactLists} from './ContactListComponent';
-import {EditContactList} from './ContactListComponent';
+import { AddContactList } from './ContactListComponent';
+import { ContactLists } from './ContactListComponent';
+import { EditContactList } from './ContactListComponent';
 import ImportDataComponent from './ImportDataComponent';
 import DialerComponent from './DialerComponent';
 import Error404Component from './Error404Component';
@@ -34,7 +34,7 @@ export class IndexComponent extends Component {
               <Route path='/dialerData' element={<DialerComponent />} />
 
               <Route path='/*' element={<Error404Component />} />
-              
+
 
             </Routes>
           </div>

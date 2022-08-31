@@ -38,7 +38,14 @@ export class ImportDataComponent extends Component {
             errorMsg: ""
           }
         );
-      } else {
+      } else if(response.status === 400){
+        this.setState(
+          {
+            successMsg: "",
+            errorMsg: "Ugh!... you have selected a non-csv file"
+          }
+        );
+      }else {
         this.setState(
           {
             successMsg: "",
@@ -80,7 +87,7 @@ export class ImportDataComponent extends Component {
           {(this.state.successMsg && this.state.successMsg === 'SUCCESS') ? 'Data imported successfully' : ""}
         </h4>
         <h4 className='display-6 text-danger'>
-          {(this.state.errorMsg && this.state.errorMsg === 'FAILURE') ? "Data import failed" : ""}
+          {(this.state.errorMsg && this.state.errorMsg === 'FAILURE') ? "Something went wrong!" : this.state.errorMsg}
         </h4>
       </div>
     )

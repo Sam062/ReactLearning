@@ -3,7 +3,7 @@ import * as yup from "yup";
 import React, { Component } from 'react'
 import ContactListService from '../service/ContactListService';
 import axios from 'axios';
-import { Link, useParams, useNavigate  } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 
 const URL = "http://localhost:9695/contacts";
 
@@ -13,28 +13,28 @@ export const EditContactList = () => {
     const { name } = useParams();
     const { desc } = useParams();
 
-    const navigate= useNavigate();
+    const navigate = useNavigate();
 
     const [getMsg, setMsg] = React.useState("");
 
     const formik = useFormik({
         initialValues: {
-            listName: name,
-            listDesc: desc,
+            listName: name.trim(),
+            listDesc: desc.trim(),
             contactListId: id
         },
         validationSchema: yup.object({
-            listName: yup.string().required("List name required.").min(4, "Name too short.").max(15, "Name too long."),
-            listDesc: yup.string().required("List description required.").min(4, "Description too short.").max(50, "Description too long.")
+            listName: yup.string().trim().required("List name required.").min(4, "Name too short.").max(15, "Name too long."),
+            listDesc: yup.string().trim().required("List description required.").min(4, "Description too short.").max(50, "Description too long.")
         }),
         onSubmit: (values) => {
             console.log(values)
             axios.post(`${URL}/saveOrUpdateContactList`, values)
                 .then((response) => {
-                    alert((response.data == 'SUCCESS') ? 'Contact List updated successfully' : 'Something went wrong');
-                    setMsg((response.data == 'SUCCESS') ? 'Contact List updated successfully' : 'Something went wrong');
+                    alert((response.data === 'SUCCESS') ? 'Contact List updated successfully' : 'Something went wrong');
+                    setMsg((response.data === 'SUCCESS') ? 'Contact List updated successfully' : 'Something went wrong');
                 });
-                navigate("/viewAllContactList");
+            navigate("/viewAllContactList");
         },
         onReset: () => {
             setMsg('');
@@ -58,7 +58,11 @@ export const EditContactList = () => {
 
                     <br />
                     <div className='text-center'>
-                        <button type='submit' className='btn btn-success m-1' style={{ "width": "49%" }} disabled={formik.errors.listName || formik.errors.listDesc || (formik.values.listName.trim() === name.trim() && formik.values.listDesc.trim()===desc.trim())}>
+                        <button type='submit' className='btn btn-success m-1' style={{ "width": "49%" }} 
+                        disabled={formik.errors.listName || formik.errors.listDesc || 
+                            (formik.values.listName.trim() === name.trim() && formik.values.listDesc.trim() === desc.trim())
+                            || formik.values.listName.trim().length<=0 || formik.values.listDesc.trim().length<=0
+                            }>
                             Update</button>
                         <button type='reset' className='btn btn-danger m-1' style={{ "width": "49%" }} onClick={formik.handleReset}>reset</button>
                     </div>
@@ -96,15 +100,15 @@ export class ContactLists extends React.Component {
         let flag = window.confirm("Are you sure?");
         if (flag) {
             ContactListService.deleteContactList(id).then(response => {
-                this.setState({ msg: (response.data == 'SUCCESS') ? 'Deleted Successfully' : response.msg });
+                this.setState({ msg: (response.data === 'SUCCESS') ? 'Deleted Successfully' : response.msg });
                 this.getAllContactLists();
             })
         }
     }
 
-    editContactList(id) {
-        alert("edit called = " + id);
-    }
+    // editContactList(id) {
+    //     alert("edit called = " + id);
+    // }
     createContactList() {
         alert(this.form.data);
         ContactListService.createContactList();
@@ -172,23 +176,23 @@ export class ContactLists extends React.Component {
 
 export function AddContactList() {
     const [getMsg, setMsg] = React.useState("");
-    const history=useNavigate();
+    const history = useNavigate();
     const formik = useFormik({
         initialValues: {
             listName: '',
             listDesc: ''
         },
         validationSchema: yup.object({
-            listName: yup.string().required("List name required.").min(4, "Name too short.").max(15, "Name too long."),
-            listDesc: yup.string().required("List description required.").min(4, "Description too short.").max(50, "Description too long.")
+            listName: yup.string().trim().required("List name required.").min(4, "Name too short.").max(15, "Name too long."),
+            listDesc: yup.string().trim().required("List description required.").min(4, "Description too short.").max(50, "Description too long.")
         }),
         onSubmit: (values) => {
             axios.post(`${URL}/saveOrUpdateContactList`, values)
                 .then((response) => {
-                    alert((response.data == 'SUCCESS') ? 'Contact List addedd successfully' : 'Something went wrong');
-                    setMsg((response.data == 'SUCCESS') ? 'Contact List addedd successfully' : 'Something went wrong')
+                    alert((response.data === 'SUCCESS') ? 'Contact List addedd successfully' : 'Something went wrong');
+                    setMsg((response.data === 'SUCCESS') ? 'Contact List addedd successfully' : 'Something went wrong')
                 });
-                history('/viewAllContactList');
+            history('/viewAllContactList');
         },
         onReset: () => {
             setMsg('');
@@ -209,7 +213,7 @@ export function AddContactList() {
 
                     <br />
                     <div className='text-center'>
-                        <button type='submit' className='btn btn-success m-1' style={{ "width": "49%" }} disabled={formik.errors.listName || formik.errors.listDesc}>Add</button>
+                        <button type='submit' className='btn btn-success m-1' style={{ "width": "49%" }} disabled={formik.errors.listName || formik.errors.listDesc || formik.values.listName.trim().length<=0 || formik.values.listDesc.trim().length<=0}>Add</button>
                         <button type='reset' className='btn btn-danger m-1' style={{ "width": "49%" }} onClick={formik.handleReset}>reset</button>
                     </div>
                 </div>
