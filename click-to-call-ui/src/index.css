@@ -19,3 +19,16 @@ footer {
   /* Height of the footer*/
   height: 40px;
 }
+
+.HomeButtonsRight{
+    height: 13rem;
+    width: 49%;
+    border: none;
+    margin-right: 1px;
+}
+.HomeButtonsLeft{
+    height: 13rem;
+    width: 49%;
+    border: none;
+    margin-left: 1px;
+}

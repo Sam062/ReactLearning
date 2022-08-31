@@ -58,10 +58,10 @@ export const EditContactList = () => {
 
                     <br />
                     <div className='text-center'>
-                        <button type='submit' className='btn btn-success m-1' style={{ "width": "49%" }} 
-                        disabled={formik.errors.listName || formik.errors.listDesc || 
-                            (formik.values.listName.trim() === name.trim() && formik.values.listDesc.trim() === desc.trim())
-                            || formik.values.listName.trim().length<=0 || formik.values.listDesc.trim().length<=0
+                        <button type='submit' className='btn btn-success m-1' style={{ "width": "49%" }}
+                            disabled={formik.errors.listName || formik.errors.listDesc ||
+                                (formik.values.listName.trim() === name.trim() && formik.values.listDesc.trim() === desc.trim())
+                                || formik.values.listName.trim().length <= 0 || formik.values.listDesc.trim().length <= 0
                             }>
                             Update</button>
                         <button type='reset' className='btn btn-danger m-1' style={{ "width": "49%" }} onClick={formik.handleReset}>reset</button>
@@ -88,7 +88,6 @@ export class ContactLists extends React.Component {
         ContactListService.getAllContactLists().then(
             response => {
                 this.setState({ contactList: response.data });
-                console.log(this.state.contactList);
             }
         );
     }
@@ -106,15 +105,10 @@ export class ContactLists extends React.Component {
         }
     }
 
-    // editContactList(id) {
-    //     alert("edit called = " + id);
-    // }
     createContactList() {
         alert(this.form.data);
         ContactListService.createContactList();
     }
-
-
 
     render() {
         return <>
@@ -128,7 +122,6 @@ export class ContactLists extends React.Component {
                 <table className="table table-hover">
                     <thead className='bg-info text-white'>
                         <tr>
-                            {/* <th>ID</th> */}
                             <th>Name</th>
                             <th>Desc</th>
                             <th>Created Date</th>
@@ -140,7 +133,6 @@ export class ContactLists extends React.Component {
                         {
                             this.state.contactList.map(list => {
                                 return <tr key={list.contactListId}>
-                                    {/* <td>{list.contactListId}</td> */}
                                     <td>{list.listName}</td>
                                     <td>{list.listDesc}</td>
                                     <td>{list.createdDate}</td>
@@ -189,7 +181,7 @@ export function AddContactList() {
         onSubmit: (values) => {
             axios.post(`${URL}/saveOrUpdateContactList`, values)
                 .then((response) => {
-                    alert((response.data === 'SUCCESS') ? 'Contact List addedd successfully' : 'Something went wrong');
+                    // alert((response.data === 'SUCCESS') ? 'Contact List addedd successfully' : 'Something went wrong');
                     setMsg((response.data === 'SUCCESS') ? 'Contact List addedd successfully' : 'Something went wrong')
                 });
             history('/viewAllContactList');
@@ -213,7 +205,7 @@ export function AddContactList() {
 
                     <br />
                     <div className='text-center'>
-                        <button type='submit' className='btn btn-success m-1' style={{ "width": "49%" }} disabled={formik.errors.listName || formik.errors.listDesc || formik.values.listName.trim().length<=0 || formik.values.listDesc.trim().length<=0}>Add</button>
+                        <button type='submit' className='btn btn-success m-1' style={{ "width": "49%" }} disabled={formik.errors.listName || formik.errors.listDesc || formik.values.listName.trim().length <= 0 || formik.values.listDesc.trim().length <= 0}>Add</button>
                         <button type='reset' className='btn btn-danger m-1' style={{ "width": "49%" }} onClick={formik.handleReset}>reset</button>
                     </div>
                 </div>

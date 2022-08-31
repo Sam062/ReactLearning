@@ -69,7 +69,7 @@ export default class HeaderComponent extends Component {
                 {/* <Nav.Link href="#home">Home</Nav.Link>
             <Nav.Link href="#link">Link</Nav.Link> */}
                 <NavDropdown title="Contact List" id="basic-nav-dropdown">
-                  <NavDropdown.Item><Link to="/newContactList" className='btn'>Add Contact list</Link></NavDropdown.Item>
+                  <NavDropdown.Item><Link to="/newContactList" className='btn'>Add New List</Link></NavDropdown.Item>
                   <NavDropdown.Item><Link to="/viewAllContactList" className='btn'>View All</Link></NavDropdown.Item>
                 </NavDropdown>
 
