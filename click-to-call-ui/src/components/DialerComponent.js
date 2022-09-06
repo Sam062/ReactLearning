@@ -126,7 +126,7 @@ export default function DialerComponent() {
             { //Import Data form show/hide
                 isImportHidden &&
                 <div>
-                    <ImportDataComponent />
+                    <ImportDataComponent setDataImported={setDataImported} />
                 </div>
             }
             <table className="table table-hover">
