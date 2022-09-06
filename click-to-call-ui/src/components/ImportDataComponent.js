@@ -10,8 +10,6 @@ export default function ImportDataComponent({ setDataImported }) {
   const [contactLists, setContactLists] = useState([]);
   const [listName, setListName] = useState('');
   const [contactListId, setContactListId] = useState('');
-  // const [isDataImported, setDataImported] = useState(false);
-
 
   useEffect(() => {
     axios.get('http://localhost:9695/contacts/getAllContactLists')
@@ -38,28 +36,37 @@ export default function ImportDataComponent({ setDataImported }) {
     let data = new FormData()
     data.append('file', file);
 
-    const URL = 'http://localhost:9695/importcsvdata/' + contactListId;
-    console.log("URL=> " + URL);
-    axios.post(URL, data)
-      .then(response => {
-        console.log(response)
-        if (response.status === 200) {
-          setSuccessMsg('SUCCESS');
-          setErrorMsg('');
+    let completeFilename = file.name;
+    let fileExtention = completeFilename.substr(completeFilename.length - 4);
 
-          setDataImported((prevState) => !prevState);
-        } else if (response.status === 400) {
-          setSuccessMsg('');
-          setErrorMsg('Ugh!... you have selected a non-csv file');
-        } else {
+    // alert(completeFilename); //dilerdata.csv------- need to work pn the extention
+    // alert(fileExtention);
+
+    if (fileExtention === '.csv') {
+      const URL = 'http://localhost:9695/importcsvdata/' + contactListId;
+      console.log("URL=> " + URL);
+      axios.post(URL, data)
+        .then(response => {
+          console.log(response)
+          if (response.status === 200) {
+            setSuccessMsg('SUCCESS');
+            setErrorMsg('');
+
+            setDataImported((prevState) => !prevState);
+          } else if (response.status === 400) {
+            setSuccessMsg('');
+            setErrorMsg('Ugh!... you have selected a non-csv file');
+          } else {
+            setSuccessMsg('');
+            setErrorMsg('FAILURE');
+          }
+        }).catch(err => {
           setSuccessMsg('');
           setErrorMsg('FAILURE');
-        }
-      }).catch(err => {
-        setSuccessMsg('');
-        setErrorMsg('FAILURE');
-      });
-
+        });
+    } else {
+      alert('Cannot process non csv file');
+    }
   }
 
   return <>
@@ -103,7 +110,7 @@ export default function ImportDataComponent({ setDataImported }) {
             }
           </select>
           <input onChange={(event) => setFile(event.target.files[0])} type="file" className='form-control text-success' style={{ "marginLeft": "0.5rem" }} />
-          <button disabled={!file} onClick={() => uploadFileData()} className='form-control btn btn-success' style={{ "marginLeft": "0.5rem", "width": "20rem" }}>
+          <button disabled={!(file)} onClick={() => uploadFileData()} className='form-control btn btn-success' style={{ "marginLeft": "0.5rem", "width": "20rem" }}>
             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 16 16">
               <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
               <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
