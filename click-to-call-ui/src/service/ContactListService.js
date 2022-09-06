@@ -1,18 +1,18 @@
 import axios from 'axios';
 
-const URL="http://localhost:9695/contacts";
+const URL = "http://localhost:9695/contacts";
 
-class CampaignListService{
+class CampaignListService {
 
-    getAllContactLists(){
-       return axios.get(`${URL}/getAllContactLists`);
+    getAllContactLists() {
+        return axios.get(`${URL}/getAllContactLists`);
     }
 
-    deleteContactList(id){
+    deleteContactList(id) {
         return axios.delete(`${URL}/deleteContactList/${id}`);
     }
 
-    addContactList(data){
+    addContactList(data) {
         return axios.post(`${URL}/saveOrUpdateContactList`, data);
     }
 

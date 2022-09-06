@@ -1,72 +1,151 @@
-import React from 'react';
+import React, { Component, useState, useEffect } from 'react'
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
+import { Formik } from "formik";
+import * as yup from "yup";
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import ImportDataComponent from './ImportDataComponent';
 
-export default class DialerComponent extends React.Component {
+
+class ImportCSVComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            dialerList: [],
-            msg: null,
-            dialStatus: ''
+            contactLists: [],
+            file: ''
         }
     }
 
-    getAllDialerData() {
+    componentDidMount() {
+        axios.get('http://localhost:9695/contacts/getAllContactLists', []).then(response => {
+            this.setState({
+                contactLists: response.data
+            })
+        })
+    }
+
+
+    // const formik = useFormik({
+    //     initialValues: {
+    //         contactList: '',
+    //         file: ''
+    //     },
+    //     // validationSchema: yup.object({
+    //     //     listName: yup.string().trim().required("List name required.").min(4, "Name too short.").max(15, "Name too long."),
+    //     //     listDesc: yup.string().trim().required("List description required.").min(4, "Description too short.").max(50, "Description too long.")
+    //     // }),
+    //     onSubmit: (values) => {
+    //         // axios.post(`${URL}/saveOrUpdateContactList`, values)
+    //         //     .then((response) => {
+    //         //         alert((response.data === 'SUCCESS') ? 'Contact List addedd successfully' : 'Something went wrong');
+    //         //         setMsg((response.data === 'SUCCESS') ? 'Contact List addedd successfully' : 'Something went wrong')
+    //         //         if(response.data === 'SUCCESS'){
+    //         //             formik.values.listName='';
+    //         //         formik.values.listDesc='';
+    //         //         }
+
+    //         //     });
+    //         // navigate('/viewAllContactList');
+    //         alert('form submitte')
+    //     },
+    //     onReset: () => {
+    //         setMsg('');
+    //     }
+    // })
+
+    render() {
+        return <>
+            <form style={{ "display": "flex" }}>
+                <div className="form-control">
+                    <span><h1 className="display-6 text-muted">Choose file/files</h1></span>
+                    <label >Choose Contact List</label>
+                    <select className="form-select" style={{ "width": "max-content" }}>
+                        {
+                            this.state.contactLists.map(lists => {
+                                return <option key={lists.contactListId} value={lists.contactListId}>
+                                    {lists.listName}
+                                </option>
+                            })
+                        }
+                    </select>
+                    {/* <input type="file" className='form-control text-success' onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.file} /> */}
+                </div>
+            </form>
+            <br />
+        </>
+    }
+}
+
+export default function DialerComponent() {
+    const [dialerList, setDialerList] = useState([]);
+    const [msg, setMsg] = useState('');
+    const [dialStatus, setDialStatus] = useState('');
+    const [isDataImported, setDataImported] = useState(false);
+    const [isImportHidden, setImportHidden] = useState(false);
+
+    useEffect(() => {
+        getAllDialerData();
+    }, [isDataImported]);
+
+    const getAllDialerData = () => {
         axios.get('http://localhost:9695/getDialerData').then(
             response => {
-                this.setState({ dialerList: response.data });
+                setDialerList(response.data);
             }
         );
     }
 
-    componentDidMount() {
-        this.getAllDialerData();
-    }
-
-    dialNumber(countryCode, mobile) {
+    const dialNumber = (countryCode, mobile) => {
         let flag = window.confirm('Are you sure to dial ' + countryCode + mobile);
         if (flag) {
             axios.get("http://localhost:9695/handledial?countryCode=" + encodeURIComponent(countryCode) + "&number=" + mobile)
                 .then((response) => {
-                    this.setState({
-                        dialStatus: response.data
-                    })
+                    setDialStatus(response.data)
                 });
-            Navigate("/");
         } else {
-            this.setState({
-                dialStatus: ''
-            })
+            setDialStatus('')
         }
     }
 
-
-    render() {
-        return <>
-            <div className='mt-2 bg-light'>
-                <h1 className='display-6 text-center'>Dialer Lists</h1>
-                {
-                    this.state.dialStatus && (
-                        <div id='dialStatusBox' className={(this.state.dialStatus !== 'Failed to dial') ? 'alert alert-success text-center' : 'alert alert-danger text-center'}>{this.state.dialStatus}</div>
-                    )
-                }
-                <table className="table table-hover">
-                    <thead className='bg-info text-white'>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Mobile-1</th>
-                            <th>Mobile-2</th>
-                            <th>Zip</th>
-                            <th>Priority(1-10)</th>
-                            <th>Status</th>
-                            <th>Operations</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            this.state.dialerList.map(list => {
+    return <>
+        <div>
+            <h1 className='display-6'>
+                <button className="btn text-success" style={{ "marginLeft": ".2rem" }} onClick={() => setImportHidden((prevState) => !prevState)}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 16 16">
+                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                    </svg>
+                    <span style={{ "verticalAlign": "middle", "marginLeft": "0.5rem" }}>Import CSV</span>
+                </button> <span style={{ "marginLeft": "55rem" }}>Dialer Data</span>
+            </h1>
+            {
+                dialStatus && (
+                    <div id='dialStatusBox' className={(dialStatus !== 'Failed to dial') ? 'alert alert-success text-center' : 'alert alert-danger text-center'}>{dialStatus}</div>
+                )
+            }
+            { //Import Data form show/hide
+                isImportHidden &&
+                <div>
+                    <ImportDataComponent />
+                </div>
+            }
+            <table className="table table-hover">
+                <thead className='bg-info text-white'>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Mobile-1</th>
+                        <th>Mobile-2</th>
+                        <th>Zip</th>
+                        <th>Priority(1-10)</th>
+                        <th>Status</th>
+                        <th>Operations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        dialerList.length > 0 ?
+                            dialerList.map(list => {
                                 return <tr key={list.dialerId}>
                                     <td>{list.name}</td>
                                     <td>{list.email}</td>
@@ -89,11 +168,15 @@ export default class DialerComponent extends React.Component {
                                     </td>
                                 </tr>
                             })
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </>
-    }
+                            : <tr>
+                                <td colSpan={8}>
+                                    <h1 className='display-6 text-center text-danger'>No Data to display</h1>
+                                </td>
+                            </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </>
 
 }
