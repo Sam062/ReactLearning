@@ -56,7 +56,7 @@ export default class HeaderComponent extends Component {
         <Navbar bg="light" expand="sm">
           <Container>
             <Navbar.Brand>
-              <Link to="/" className='btn text-muted' style={{ "marginLeft": "-4rem" }}>
+              <Link to="/" className='btn text-muted' style={{ "marginLeft": "-5rem" }}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-activity" viewBox="0 0 16 16">
                   <path fillRule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z" />
                 </svg>
@@ -66,22 +66,30 @@ export default class HeaderComponent extends Component {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
-                {/* <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link> */}
-                <NavDropdown title="Contact List" id="basic-nav-dropdown">
-                  <NavDropdown.Item><Link to="/newContactList" className='btn'>Add New List</Link></NavDropdown.Item>
-                  <NavDropdown.Item><Link to="/viewAllContactList" className='btn'>View All</Link></NavDropdown.Item>
-                </NavDropdown>
+                {/* <Nav.Link href="#home">Admin</Nav.Link> */}
+                <Nav.Link ><Link to="/viewAllContactList" className='nav text-muted' style={{ "textDecoration": "none" }}>Contact Lists</Link></Nav.Link>
 
-                <NavDropdown title="Contact Details" id="basic-nav-dropdown">
-                  <NavDropdown.Item><Link to="/contacts" className='btn'>Add New Contact</Link></NavDropdown.Item>
-                  <NavDropdown.Item><Link to="/contacts" className='btn'>View All</Link></NavDropdown.Item>
-                </NavDropdown>
+                <Nav.Link ><Link to="/xyz" className='nav text-muted' style={{ "textDecoration": "none" }}>Admin</Link></Nav.Link>
+                <Nav.Link ><Link to="/contacts" className='nav text-muted' style={{ "textDecoration": "none" }}>Contacts</Link></Nav.Link>
 
-                <NavDropdown title="Data Feed" id="basic-nav-dropdown">
-                  <NavDropdown.Item><Link to="/importData" className='btn'>Import CSV</Link></NavDropdown.Item>
-                  <NavDropdown.Item><Link to="/dialerData" className='btn'>Dialer Data</Link></NavDropdown.Item>
-                </NavDropdown>
+                {/* <Nav.Link ><Link to="/dialerData" className='nav text-muted' style={{ "textDecoration": "none" }}>Dialer Data</Link></Nav.Link> */}
+
+
+
+                {/* <NavDropdown title="Contact List" id="basic-nav-dropdown"> */}
+                {/* <NavDropdown.Item><Link to="/newContactList" disabled className='btn'>Add New List</Link></NavDropdown.Item> */}
+                {/* <NavDropdown.Item><Link to="/viewAllContactList" className='btn'>View All</Link></NavDropdown.Item> */}
+                {/* </NavDropdown> */}
+
+                {/* <NavDropdown title="Contact Details" id="basic-nav-dropdown"> */}
+                {/* <NavDropdown.Item><Link to="/contacts" className='btn'>Add New Contact</Link></NavDropdown.Item> */}
+                {/* <NavDropdown.Item><Link to="/contacts" className='btn'>View All</Link></NavDropdown.Item> */}
+                {/* </NavDropdown> */}
+
+                {/* <NavDropdown title="Data Feed" id="basic-nav-dropdown"> */}
+                {/* <NavDropdown.Item><Link to="/importData" className='btn'>Import CSV</Link></NavDropdown.Item> */}
+                {/* <NavDropdown.Item><Link to="/dialerData" className='btn'>Dialer Data</Link></NavDropdown.Item> */}
+                {/* </NavDropdown> */}
               </Nav>
             </Navbar.Collapse>
           </Container>

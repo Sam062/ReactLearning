@@ -1,7 +1,7 @@
 import React, { Component, useState, useEffect } from 'react';
 import axios from 'axios';
 
-export default function ImportDataComponent({ setDataImported }) {
+export default function ImportDataComponent({ setDataImported, activeListId, activeListName }) {
 
   const [file, setFile] = useState(null);
   const [successMsg, setSuccessMsg] = useState('');
@@ -95,18 +95,19 @@ export default function ImportDataComponent({ setDataImported }) {
           </span> */}
         <div style={{ "display": "flex", "padding": "0.5rem" }}>
           {/* <label>Choose List</label> */}
-          <label className="input-group-text" htmlFor="inputGroupSelect01">Select contact list</label>
-          <select className="form-select" id="inputGroupSelect01"
+          <label className="input-group-text" htmlFor="inputGroupSelect01">Contact list</label>
+          <select className="form-select" id="inputGroupSelect01" disabled
             name="contactList" onChange={(e) => setContactListId(e.target.value)} value={contactListId}>
             {/* <option selected>Choose...</option> */}
             {
-              contactLists.length > 0 ?
-                contactLists.map(list => {
-                  return <option key={list.contactListId} value={list.contactListId}>
-                    {list.listName}
-                  </option>
-                })
-                : <option>Choose</option>
+              // contactLists.length > 0 ?
+              //   contactLists.map(list => {
+              //     return <option key={list.contactListId} value={list.contactListId}>
+              //       {list.listName}
+              //     </option>
+              //   })
+              //   : <option>Choose</option>
+              <option value={activeListId} selected>{activeListName}</option>
             }
           </select>
           <input onChange={(event) => setFile(event.target.files[0])} type="file" className='form-control text-success' style={{ "marginLeft": "0.5rem" }} />

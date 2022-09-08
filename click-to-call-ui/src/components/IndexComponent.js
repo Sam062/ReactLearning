@@ -8,9 +8,10 @@ import ContactsComponent from './ContactsComponent';
 import HomeComponent from './HomeComponent';
 import { AddContactList } from './ContactListComponent';
 import { ContactLists } from './ContactListComponent';
-import { EditContactList } from './ContactListComponent';
+// import { EditContactList } from './ContactListComponent';
 import ImportDataComponent from './ImportDataComponent';
 import DialerComponent from './DialerComponent';
+import ContactListData from './ContactListData';
 import Error404Component from './Error404Component';
 
 export class IndexComponent extends Component {
@@ -27,11 +28,12 @@ export class IndexComponent extends Component {
               <Route path='/contacts' element={<ContactsComponent />} />
 
               <Route path='/contactList' element={<ContactListComponent />} />
-              <Route path='/newContactList' element={<AddContactList />} />
+              {/* <Route path='/newContactList' element={<AddContactList />} /> */}
               <Route path='/viewAllContactList' element={<ContactLists />} />
-              <Route path='/editContactList/:id/:name/:desc' element={<EditContactList />} />
-              <Route path='/importData' element={<ImportDataComponent />} />
+              {/* <Route path='/editContactList/:id/:name/:desc' element={<EditContactList />} /> */}
+              {/* <Route path='/importData' element={<ImportDataComponent />} /> */}
               <Route path='/dialerData' element={<DialerComponent />} />
+              <Route path='/contactListData/:contactListId/:listName' element={<DialerComponent />} />
 
               <Route path='/*' element={<Error404Component />} />
 
