@@ -1,14 +1,15 @@
 import { Button } from '@mui/material'
 import axios from 'axios';
 import React, { useState } from 'react';
+import './ImageUpload.css';
 
-function ImageUpload({setNewPost}) {
+function ImageUpload({ setNewPost }) {
 
     const [caption, setCaption] = useState('');
     const [url, setUrl] = useState('');
     const [progress, setProgress] = useState(0);
     const [image, setImage] = useState(null);
-    const [username, setUsername]=useState('');
+    const [username, setUsername] = useState('');
 
     const handleChange = (e) => {
         if (e.target.files[0]) {
@@ -56,7 +57,7 @@ function ImageUpload({setNewPost}) {
 
 
     return (
-        <div className='form-control'>
+        <div className='imageUpload'>
             <progress value={progress} max="100" hidden />
             <input type="text" placeholder="Enter username" onChange={event => setUsername(event.target.value)} name={username} value={username} />
             <input type="text" placeholder="Enter a caption..." onChange={event => setCaption(event.target.value)} name={caption} value={caption} />

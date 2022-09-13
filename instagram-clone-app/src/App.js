@@ -10,6 +10,7 @@ import { Button, Input } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { Modal } from '@mui/material';
 import ImageUpload from './Components/ImageUpload';
+// import InstagramEmbed from 'react-instagram-embed';
 
 
 function getModelStyle() {
@@ -84,16 +85,39 @@ function App() {
 
       <div className="app_header">
         <img src={instagramLogo} className="app_imageHeader" alt="Insta-logo" height="30rem" />
-          <Button style={{"marginLeft": "65rem"}} onClick={() => setOpen(true)}>Sign Up</Button>
+        <Button style={{ "marginLeft": "65rem" }} onClick={() => setOpen(true)}>Sign Up</Button>
       </div>
       <br /><br /><br />
-      <ImageUpload username={username} setNewPost={setNewPost}/>
       <h1 className='display-6'>Hello Developer, Welcome to Instagram...</h1>
-      {
-        posts.map(post => (
-          <Post key={post.postId} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
-        ))
-      }
+      <div style={{ "display": "flex" }}>
+        <div>
+          <div className='app_posts'>
+            {
+              posts.map(post => (
+                <Post key={post.postId} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
+              ))
+            }
+          </div>
+
+          {/* <InstagramEmbed
+        url='https://instagr.am/p/Zw9o4/'
+        clientAccessToken='123|456'
+        maxWidth={320}
+        hideCaption={false}
+        containerTagName='div'
+        protocol=''
+        injectScript
+        onLoading={() => { }}
+        onSuccess={() => { }}
+        onAfterRender={() => { }}
+        onFailure={() => { }}
+      /> */}
+        </div>
+        <div>
+          <h1 className='display-1'>Hello side bard</h1>
+        </div>
+      </div>
+      <ImageUpload username={username} setNewPost={setNewPost} />
     </div>
   );
 }

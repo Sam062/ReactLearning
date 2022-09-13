@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 import { Formik } from "formik";
 import * as yup from "yup";
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import ImportDataComponent from './ImportDataComponent';
+import ImportDataComponent, { ImportData_ReadApiComponent, ImportData_AddManualComponent } from './ImportDataComponent';
 
 
 class ImportCSVComponent extends React.Component {
@@ -82,24 +82,31 @@ export default function DialerComponent() {
     const [msg, setMsg] = useState('');
     const [dialStatus, setDialStatus] = useState('');
     const [isDataImported, setDataImported] = useState(false);
-    const [isImportHidden, setImportHidden] = useState(false);
+    const [isCsvImportHidden, setCsvImportHidden] = useState(false);
+    const [isAddManualHidden, setAddManualHidden] = useState(false);
+    const [isReadApiHidden, setReadApiHidden] = useState(false);
 
     useEffect(() => {
         getAllDialerData();
     }, [isDataImported]);
 
+    const BASE_URL = 'http://localhost:9695/getDialerData/';
+    const URL = BASE_URL + + contactListId + '/' + listName;
+
     const getAllDialerData = () => {
-        axios.get('http://localhost:9695/getDialerData').then(
+        console.log('URL=>' + URL);
+        axios.get(URL).then(
             response => {
                 setDialerList(response.data);
             }
         );
     }
 
-    const dialNumber = (countryCode, mobile) => {
+    const dialNumber = (countryCode, mobile, contactListId) => {
         let flag = window.confirm('Are you sure to dial ' + countryCode + mobile);
         if (flag) {
-            axios.get("http://localhost:9695/handledial?countryCode=" + encodeURIComponent(countryCode) + "&number=" + mobile)
+            axios.get("http://localhost:9695/handledial?countryCode="
+                + encodeURIComponent(countryCode) + "&number=" + mobile + "&contactListId=" + contactListId)
                 .then((response) => {
                     setDialStatus(response.data)
                 });
@@ -111,27 +118,29 @@ export default function DialerComponent() {
     return <>
         <div>
             <h1 className='display-6'>
-                <button className={isImportHidden ? "btn text-success btn-light border-dark  rounded-pill" : "btn text-success"} style={{ "marginLeft": ".2rem" }} 
-                onClick={() => setImportHidden((prevState) => !prevState)}>
+                <button className={isCsvImportHidden ? "btn text-success btn-light border-dark  rounded-pill" : "btn text-success"} style={{ "marginLeft": "0.2rem" }}
+                    onClick={() => { setCsvImportHidden((prevState) => !prevState); setAddManualHidden(false); setReadApiHidden(false) }}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 16 16">
                         <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
                         <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
                     </svg>
                     <span style={{ "verticalAlign": "middle", "marginLeft": "0.5rem" }}>Import CSV</span>
                 </button>
-                <button className="btn text-success" style={{ "marginLeft": ".2rem" }} >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-plus-circle" viewBox="0 0 16 16">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                <button className={isAddManualHidden ? "btn text-success btn-light border-dark  rounded-pill" : "btn text-success"} style={{ "marginLeft": "0.5rem" }}
+                    onClick={() => { setAddManualHidden((prevState) => !prevState); setCsvImportHidden(false); setReadApiHidden(false) }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 16 16">
+                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
                     </svg>
                     <span style={{ "verticalAlign": "middle", "marginLeft": "0.5rem" }}>Add Manually</span>
                 </button>
-                <button className="btn text-success" style={{ "marginLeft": ".2rem" }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-cloud-download" viewBox="0 0 16 16">
-                        <path d="M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383z" />
-                        <path d="M7.646 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V5.5a.5.5 0 0 0-1 0v8.793l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z" />
+                <button className={isReadApiHidden ? "btn text-success btn-light border-dark  rounded-pill" : "btn text-success"} style={{ "marginLeft": "0.5rem" }}
+                    onClick={() => { setReadApiHidden((prevState) => !prevState); setCsvImportHidden(false); setAddManualHidden(false) }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 16 16">
+                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
                     </svg>
-                    <span style={{ "verticalAlign": "middle", "marginLeft": "0.5rem" }}>Read From API</span>
+                    <span style={{ "verticalAlign": "middle", "marginLeft": "0.5rem" }}>Read API</span>
                 </button>
                 <span style={{ "float": "right", "marginRight": "1rem" }}>{listName}</span>
             </h1>
@@ -141,9 +150,21 @@ export default function DialerComponent() {
                 )
             }
             { //Import Data form show/hide
-                isImportHidden &&
+                isCsvImportHidden &&
                 <div>
-                    <ImportDataComponent setDataImported={setDataImported} activeListId={contactListId} activeListName={listName}/>
+                    <ImportDataComponent setDataImported={setDataImported} activeListId={contactListId} activeListName={listName} />
+                </div>
+            }
+            { //Import Data form show/hide
+                isAddManualHidden &&
+                <div>
+                    <ImportData_AddManualComponent />
+                </div>
+            }
+            { //Import Data form show/hide
+                isReadApiHidden &&
+                <div>
+                    <ImportData_ReadApiComponent />
                 </div>
             }
             <table className="table table-hover">
@@ -157,15 +178,15 @@ export default function DialerComponent() {
                         <th>Zip</th>
                         <th>Priority(1-10)</th>
                         <th>Status</th>
-                        <th>Operations</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
                         dialerList.length > 0 ?
-                            dialerList.map(list => {
+                            dialerList.map((list, index) => {
                                 return <tr key={list.dialerId}>
-                                    <td>{list.dialerId}</td>
+                                    <td>{++index}</td>
                                     <td>{list.name}</td>
                                     <td>{list.email}</td>
                                     <td>{list.countryCode}{list.mobile1}</td>
@@ -179,7 +200,7 @@ export default function DialerComponent() {
                                                 <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
                                             </svg>
                                         </button>
-                                        <button className='btn text-light btn-success' style={{ "marginLeft": ".5rem" }} onClick={() => this.dialNumber(`${list.countryCode}`, `${list.mobile1}`)}>
+                                        <button className='btn text-light btn-success' style={{ "marginLeft": ".5rem" }} onClick={() => dialNumber(`${list.countryCode}`, `${list.mobile1}`, `${list.contactListId}`)}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-telephone-outbound-fill" viewBox="0 0 16 16">
                                                 <path fillRule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511zM11 .5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V1.707l-4.146 4.147a.5.5 0 0 1-.708-.708L14.293 1H11.5a.5.5 0 0 1-.5-.5z" />
                                             </svg>

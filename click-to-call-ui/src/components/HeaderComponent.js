@@ -1,58 +1,19 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+// import NavDropdown from 'react-bootstrap/NavDropdown';
 
-
+const isActive = ({ isActive }) => isActive ? "btn border-dark rounded-pill" : "btn border-light";
 export default class HeaderComponent extends Component {
-  constructor(props) {
-    super(props);
-    // this.state = {
-    //   isActive: false
-    // }
-    // this.handleClick = this.handleClick.bind(this);
+  state = {
+    isActive: false
   }
-
-  // handleClick() {
-  //   this.setState({
-  //     isActive: true
-  //   })
-  // }
   render() {
     return (
-      <div className='mt-1'>
-        {/* <header> */}
-        {/* <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <div className="container-fluid">
-              <Link className="navbar-brand" to="/">Voicera <span style={{ "fontSize": "small" }}>click to call</span></Link>
-              <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-              </button>
-              <div className="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul className="navbar-nav">
-                  <li className="nav-item">
-                    <Link to="/newContactList" className={this.state.isActive ? 'nav-link active' : 'nav-link '} onClick={this.handleClick}>Add contact list</Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to="/viewAllContactList" className={this.state.isActive ? 'nav-link active' : 'nav-link '} onClick={this.handleClick}>View all contact lists</Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to="/contacts" className={this.state.isActive ? 'nav-link active' : 'nav-link '} onClick={this.handleClick}>Contact Details</Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to="/importData" className={this.state.isActive ? 'nav-link active' : 'nav-link '} onClick={this.handleClick}>Import Data</Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to="/dialerData" className={this.state.isActive ? 'nav-link active' : 'nav-link '} onClick={this.handleClick}>Dialer Data</Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </nav> */}
-
+      <div>
         <Navbar bg="light" expand="sm">
           <Container>
             <Navbar.Brand>
@@ -66,37 +27,19 @@ export default class HeaderComponent extends Component {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
-                {/* <Nav.Link href="#home">Admin</Nav.Link> */}
-                <Nav.Link ><Link to="/viewAllContactList" className='nav text-muted' style={{ "textDecoration": "none" }}>Contact Lists</Link></Nav.Link>
-
-                <Nav.Link ><Link to="/xyz" className='nav text-muted' style={{ "textDecoration": "none" }}>Admin</Link></Nav.Link>
-                <Nav.Link ><Link to="/contacts" className='nav text-muted' style={{ "textDecoration": "none" }}>Contacts</Link></Nav.Link>
-
-                {/* <Nav.Link ><Link to="/dialerData" className='nav text-muted' style={{ "textDecoration": "none" }}>Dialer Data</Link></Nav.Link> */}
-
-
-
-                {/* <NavDropdown title="Contact List" id="basic-nav-dropdown"> */}
-                {/* <NavDropdown.Item><Link to="/newContactList" disabled className='btn'>Add New List</Link></NavDropdown.Item> */}
-                {/* <NavDropdown.Item><Link to="/viewAllContactList" className='btn'>View All</Link></NavDropdown.Item> */}
-                {/* </NavDropdown> */}
-
-                {/* <NavDropdown title="Contact Details" id="basic-nav-dropdown"> */}
-                {/* <NavDropdown.Item><Link to="/contacts" className='btn'>Add New Contact</Link></NavDropdown.Item> */}
-                {/* <NavDropdown.Item><Link to="/contacts" className='btn'>View All</Link></NavDropdown.Item> */}
-                {/* </NavDropdown> */}
-
-                {/* <NavDropdown title="Data Feed" id="basic-nav-dropdown"> */}
-                {/* <NavDropdown.Item><Link to="/importData" className='btn'>Import CSV</Link></NavDropdown.Item> */}
-                {/* <NavDropdown.Item><Link to="/dialerData" className='btn'>Dialer Data</Link></NavDropdown.Item> */}
-                {/* </NavDropdown> */}
+                <NavLink to="/viewAllContactList" className={isActive}>
+                  Contact Lists
+                </NavLink>
+                <NavLink to="/xyz" className={isActive} style={{ marginLeft: "0.5rem" }}>
+                  Admin
+                </NavLink>
+                <NavLink to="/contacts" className={isActive} style={{ marginLeft: "0.5rem" }}>
+                  Contacts
+                </NavLink>
               </Nav>
             </Navbar.Collapse>
           </Container>
         </Navbar>
-
-
-        {/* </header> */}
       </div>
     )
   }
