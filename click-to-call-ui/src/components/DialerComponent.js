@@ -6,6 +6,7 @@ import * as yup from "yup";
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import ImportDataComponent, { ImportData_ReadApiComponent, ImportData_AddManualComponent } from './ImportDataComponent';
 
+const importStyle = { "paddingLeft": '0.5rem', "paddingRight": "0.5rem" }
 
 class ImportCSVComponent extends React.Component {
     constructor(props) {
@@ -117,7 +118,7 @@ export default function DialerComponent() {
 
     return <>
         <div>
-            <h1 className='display-6'>
+            <h1 className='display-6 ps-2 pe-2'>
                 <button className={isCsvImportHidden ? "btn text-success btn-light border-dark  rounded-pill" : "btn text-success"} style={{ "marginLeft": "0.2rem" }}
                     onClick={() => { setCsvImportHidden((prevState) => !prevState); setAddManualHidden(false); setReadApiHidden(false) }}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 16 16">
@@ -151,19 +152,19 @@ export default function DialerComponent() {
             }
             { //Import Data form show/hide
                 isCsvImportHidden &&
-                <div>
+                <div style={importStyle}>
                     <ImportDataComponent setDataImported={setDataImported} activeListId={contactListId} activeListName={listName} />
                 </div>
             }
             { //Import Data form show/hide
                 isAddManualHidden &&
-                <div>
+                <div style={importStyle}>
                     <ImportData_AddManualComponent />
                 </div>
             }
             { //Import Data form show/hide
                 isReadApiHidden &&
-                <div>
+                <div style={importStyle}>
                     <ImportData_ReadApiComponent />
                 </div>
             }

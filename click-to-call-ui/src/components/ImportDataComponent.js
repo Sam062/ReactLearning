@@ -3,13 +3,13 @@ import axios from 'axios';
 
 export function ImportData_AddManualComponent() {
   return <>
-    <marquee><h1 className='display-6 text-dark'>Add Data Manually Form</h1></marquee>
+    <h1 className='display-6 text-dark'>Add Data Manually Form</h1>
     <hr />
   </>
 }
 export function ImportData_ReadApiComponent() {
   return <>
-    <marquee><h1 className='display-6 text-dark'>Read Data From API Form</h1></marquee>
+    <h1 className='display-6 text-dark'>Read Data From API Form</h1>
     <hr />
   </>
 }
@@ -88,12 +88,11 @@ export default function ImportDataComponent({ setDataImported, activeListId, act
       {/* <span>
             <h1 className="display-6 text-muted">Choose file/files</h1>
           </span> */}
-      <div style={{ "display": "flex", "padding": "0.5rem" }}>
+      <div style={{ "display": "flex", "padding": "0.5rem"}}>
         {/* <label>Choose List</label> */}
-        <label className="input-group-text" htmlFor="inputGroupSelect01">Contact list</label>
-
-        <select className="form-select" id="inputGroupSelect01"
-          name="contactList" value={activeListId} disabled>
+        <label className="input-group-text">{activeListName} </label>
+        <select className="form-select" id="inputGroupSelect01" hidden
+          name="contactList" value={activeListId} disabled style={{"marginLeft": "0.2rem"}}>
           <option value={activeListId} defaultValue>{activeListName}</option>
         </select>
 
