@@ -7,12 +7,12 @@
     padding: 20px;
     border-bottom: 1px solid lightgray;
     object-fit: contain;
-    position: fixed;
+    /* position: fixed; */
 }
 .app_signup{
     display: flex;
     flex-direction: column;
 }
 .app_posts{
-    padding: 20px;
+    padding: 25px;
 }

@@ -5,7 +5,6 @@ import Post from '../src/Components/Post'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Avatar from "@mui/material/Avatar"
-
 import { Button, Input } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { Modal } from '@mui/material';
@@ -87,8 +86,8 @@ function App() {
         <img src={instagramLogo} className="app_imageHeader" alt="Insta-logo" height="30rem" />
         <Button style={{ "marginLeft": "65rem" }} onClick={() => setOpen(true)}>Sign Up</Button>
       </div>
-      <br /><br /><br />
-      <h1 className='display-6'>Hello Developer, Welcome to Instagram...</h1>
+      {/* <br /><br /><br /> */}
+      {/* <h1 className='display-6'>Hello Developer, Welcome to Instagram...</h1> */}
       <div style={{ "display": "flex" }}>
         <div>
           <div className='app_posts'>
@@ -100,21 +99,21 @@ function App() {
           </div>
 
           {/* <InstagramEmbed
-        url='https://instagr.am/p/Zw9o4/'
-        clientAccessToken='123|456'
-        maxWidth={320}
-        hideCaption={false}
-        containerTagName='div'
-        protocol=''
-        injectScript
-        onLoading={() => { }}
-        onSuccess={() => { }}
-        onAfterRender={() => { }}
-        onFailure={() => { }}
-      /> */}
+            url=''
+            clientAccessToken='123|456'
+            maxWidth={320}
+            hideCaption={false}
+            containerTagName='div'
+            protocol=''
+            injectScript
+            onLoading={() => { }}
+            onSuccess={() => { }}
+            onAfterRender={() => { }}
+            onFailure={() => { }}
+          /> */}
         </div>
-        <div>
-          <h1 className='display-1'>Hello side bard</h1>
+        <div className='p-3'>
+          <h1 className='display-1'>Hello side bar</h1>
         </div>
       </div>
       <ImageUpload username={username} setNewPost={setNewPost} />

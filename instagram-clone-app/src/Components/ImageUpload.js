@@ -14,6 +14,12 @@ function ImageUpload({ setNewPost }) {
     const handleChange = (e) => {
         if (e.target.files[0]) {
             setImage(e.target.files[0])
+            console.log("========================");
+            console.log(e);
+            console.log(e.target);
+            console.log(e.target.files);
+            console.log(e.target.files[0]);
+            console.log("========================");
         }
     };
     const handleUpload = () => {
