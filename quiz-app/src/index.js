@@ -3,10 +3,12 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {QuestionsComponent} from '../src/components/QuestionsComponent'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    {/* <QuestionsComponent /> */}
     <App />
   </React.StrictMode>
 );

@@ -1,16 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
-import bootstrap from '../node_modules/bootstrap/dist/css/bootstrap.css'
-import { QuestionsComponent } from './components/QuestionsComponent';
+import '../node_modules/bootstrap/dist/css/bootstrap.css'
+import { QuizComponent } from './components/QuizComponent';
+import { HeaderComponent } from './components/HeaderComponent';
+import { FooterComponent } from './components/FooterComponent';
+import { ResultComponent } from './components/ResultComponent';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <div>
-      <header className="App-header" style={{position: "fixed", width: "-webkit-fill-available"}}>
-        <h1 className="display-5">Online Quiz App</h1>
-      </header>
-        <QuestionsComponent />
-    </div>
+    <Router>
+      <div className='container-fluid'>
+        <HeaderComponent />
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <Routes>
+
+            <Route path='/' element={<QuizComponent />} />
+            <Route path='/testResult' element={<ResultComponent />} />
+
+          </Routes>
+        </div>
+        <FooterComponent />
+      </div>
+    </Router>
   );
 }
 

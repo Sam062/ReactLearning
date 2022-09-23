@@ -6,12 +6,8 @@ import FooterComponent from './FooterComponent';
 import ContactListComponent from './ContactListComponent';
 import ContactsComponent from './ContactsComponent';
 import HomeComponent from './HomeComponent';
-import { AddContactList } from './ContactListComponent';
 import { ContactLists } from './ContactListComponent';
-// import { EditContactList } from './ContactListComponent';
-import ImportDataComponent from './ImportDataComponent';
 import DialerComponent from './DialerComponent';
-import ContactListData from './ContactListData';
 import Error404Component from './Error404Component';
 
 export class IndexComponent extends Component {
