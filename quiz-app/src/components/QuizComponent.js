@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Button, CircularProgress } from '@mui/material';
 import { Question } from './Question';
 import { useQuestionData } from './useQuestionData';
@@ -7,10 +7,12 @@ import { useQuestionData } from './useQuestionData';
 export const QuizComponent = () => {
     const questions = useQuestionData();
     const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
-    const [userEmail] = useState('abc@xyz.com')
+    // const [userEmail] = useState('abc@xyz.com')
     const [isTestFinished, setTestFinished] = useState(false);
     const [testResult, setTestResult] = useState(0);
     const [finalResultJson] = useState([]);
+
+    const {userEmail}= useParams();
 
     const [currentQuestionObj, setCurrentQuestionObj] = useState({
         qid: '',
@@ -34,7 +36,7 @@ export const QuizComponent = () => {
             alert(JSON.stringify(finalResultJson))
         } else {
             alert('Some of the questions are still unanswered, Are you sure to submit?');
-            setTestFinished(true);
+            setTestFinished(false);
         }
     }
 
