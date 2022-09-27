@@ -36,15 +36,15 @@ export const Question = ({ questions, currQuestionIndex, setCurrQuestionIndex, f
 
     return (
         <div className='border rounded p-3 mt-4'>
-            <p style={{ width: "30rem", height: "5rem", fontSize: "25px",overflow: "auto" }}>ID-{currentQuestionObj.qid}: {currentQuestionObj.question}</p>
+            <p style={{ width: "30rem", height: "5rem", fontSize: "25px",overflow: "auto" }}>ID-{currentQuestionObj.qid}: {currentQuestionObj.questionStatement}</p>
             <div style={{ display: 'flex', flexDirection: "column" }}>
-                <button className='form-control m-1' onClick={(e) => { handleOptionSelect(e, currentQuestionObj.qid) }} value={currentQuestionObj.option1}>{currentQuestionObj.option1}</button>
+                <button className='form-control m-1' onClick={(e) => { handleOptionSelect(e, currentQuestionObj.qid) }} value={currentQuestionObj.options[0].option1}>{currentQuestionObj.options[0].option1}</button>
 
-                <button className='form-control m-1' onClick={(e) => { handleOptionSelect(e, currentQuestionObj.qid) }} value={currentQuestionObj.option2}>{currentQuestionObj.option2}</button>
+                <button className='form-control m-1' onClick={(e) => { handleOptionSelect(e, currentQuestionObj.qid) }} value={currentQuestionObj.options[0].option2}>{currentQuestionObj.options[0].option2}</button>
 
-                <button className='form-control m-1' onClick={(e) => { handleOptionSelect(e, currentQuestionObj.qid) }} value={currentQuestionObj.option3}>{currentQuestionObj.option3}</button>
+                <button className='form-control m-1' onClick={(e) => { handleOptionSelect(e, currentQuestionObj.qid) }} value={currentQuestionObj.options[0].option3}>{currentQuestionObj.options[0].option3}</button>
 
-                <button className='form-control m-1' onClick={(e) => { handleOptionSelect(e, currentQuestionObj.qid) }} value={currentQuestionObj.option4}>{currentQuestionObj.option4}</button>
+                <button className='form-control m-1' onClick={(e) => { handleOptionSelect(e, currentQuestionObj.qid) }} value={currentQuestionObj.options[0].option4}>{currentQuestionObj.options[0].option4}</button>
 
             </div>
 

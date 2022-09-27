@@ -1,27 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button, CircularProgress } from '@mui/material';
 import { Question } from './Question';
 import { useQuestionData } from './useQuestionData';
 
 export const QuizComponent = () => {
-    const questions = useQuestionData();
+    const { userEmail, password } = useParams();
+    const questions = useQuestionData(userEmail, password);
     const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
-    // const [userEmail] = useState('abc@xyz.com')
     const [isTestFinished, setTestFinished] = useState(false);
     const [testResult, setTestResult] = useState(0);
     const [finalResultJson] = useState([]);
 
-    const {userEmail}= useParams();
+    const navigate = useNavigate();
+
 
     const [currentQuestionObj, setCurrentQuestionObj] = useState({
-        qid: '',
-        question: "",
-        option1: "",
-        option2: "",
-        option3: "",
-        option4: "",
-        correctAnswer: ""
+        "qid": '',
+        "questionStatement": "",
+        "marks": '',
+        "questionType": "",
+        "questionCategory": "",
+        "options": [
+            {
+                "option1": "",
+                "option2": "",
+                "option3": "",
+                "option4": "",
+                "option5": null,
+                "option6": null
+            }
+        ]
     });
 
     useEffect(() => {
@@ -30,7 +39,8 @@ export const QuizComponent = () => {
     }, [questions])
 
 
-    const handleSubmitTest = () => {
+    const handleSubmitTest = (e) => {
+        e.preventDefault();
         if (finalResultJson && questions && finalResultJson.length === questions.length) {
             setTestFinished(true);
             alert(JSON.stringify(finalResultJson))
@@ -38,6 +48,7 @@ export const QuizComponent = () => {
             alert('Some of the questions are still unanswered, Are you sure to submit?');
             setTestFinished(false);
         }
+        navigate("/testResult");
     }
 
     const handleQuesClick = (ques, index) => {
@@ -58,7 +69,7 @@ export const QuizComponent = () => {
                                         color: currQuestionIndex === index ? "antiquewhite" : "inherit",
                                         textAlign: "left"
                                     }}
-                                    onClick={() => handleQuesClick(ques, index)}>ID-{ques.qid}: {ques.question}</Link>
+                                    onClick={() => handleQuesClick(ques, index)}>ID-{ques.qid}: {ques.questionStatement}</Link>
                             </li>
                         })
                     }
@@ -75,35 +86,17 @@ export const QuizComponent = () => {
                                     </span>
                                     /{questions.length}
                                 </span>
-                                <span className='border border-rounded ' style={{ fontSize: "22px", boxShadow: "4px 4px 2px black", padding: "8px" }}>{userEmail}</span>
                                 <span className='p-1 mt-1 me-2'>
-                                    <Link to={"/testResult/"+encodeURIComponent(finalResultJson)} style={{ textDecoration: "none" }}>
-                                        <Button className='bg-danger'
-                                            // color="error"
-                                            variant='contained' onClick={() => { handleSubmitTest() }}>
-                                            Submit Test
-                                        </Button>
-                                    </Link>
+                                    <Button className='bg-danger'
+                                        variant='contained' onClick={handleSubmitTest}>
+                                        Submit Test
+                                    </Button>
                                 </span>
                             </div>
                             <div style={{ display: 'flex', justifyContent: "center" }}>
 
                                 <Question currentQuestionObj={currentQuestionObj} setCurrentQuestionObj={setCurrentQuestionObj} questions={questions} currQuestionIndex={currQuestionIndex} setCurrQuestionIndex=
                                     {setCurrQuestionIndex} finalResultJson={finalResultJson} />
-                                {
-                                    isTestFinished &&
-                                    <span className="border border-rounded p-4" style={{ margin: "5rem", height: "fit-content", textAlign: "-webkit-center" }} onClick={() => setTestFinished(false)}>
-                                        <h1 className='display-6'>Result</h1>
-                                        <h1 className={testResult < questions.length / 3 ? "display-3 text-danger" : "display-3 text-success"}>
-                                            {testResult}/{questions.length}
-                                        </h1>
-                                        <h1 className='display-6 text-muted' style={{ fontSize: "20px" }}>
-                                            {
-                                                testResult / questions.length * 100
-                                            }%
-                                        </h1>
-                                    </span>
-                                }
                             </div>
                         </>
                         : (

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 export const ResultComponent = () => {
   const { finalResultJson } = useParams();
@@ -15,6 +15,11 @@ export const ResultComponent = () => {
             No questions attempted... <br />We will not consider it a valid test.
           </h1>
       }
+      <div>
+        <label>Goto</label>
+        <Link className='btn text-primary' to='/'>Home Page</Link>
+      </div>
+      <br /> <br /> <br /> <br /> <br /> <br />
     </div>
   )
 }

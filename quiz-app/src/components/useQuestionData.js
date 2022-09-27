@@ -1,15 +1,20 @@
 import { useEffect, useState } from 'react'
 import { getAllQuestions } from '../Service/QuestionService';
 
-export const useQuestionData = () => {
+export const useQuestionData = (userEmail, password) => {
     const [questions, setQuestions] = useState([]);
 
     useEffect(() => {
-        getAllQuestions().then(
+        getAllQuestions(userEmail, password).then(
             response => {
-                setQuestions(response.data);
+                console.log("RESPONSE FROM QUESTIOPNS :: ");
+                console.log(response.data);
+                console.log("Question LIST:: ");
+                console.log(response.data[0].testSet[0].questionsList);
+                
+                setQuestions(response.data[0].testSet[0].questionsList);
             }
-        ).catch((response) => alert("Error catched", response));
+        ).catch((response) => console.log("Error catched", response));
     }, []);
     return questions;
 }

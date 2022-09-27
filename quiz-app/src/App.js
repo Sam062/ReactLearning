@@ -17,8 +17,7 @@ function App() {
           <Routes>
             <Route path='/question' element={<QuizComponent />} />
             <Route path='/' element={<HomeComponent />} />
-            <Route path='/:userEmail' element={<QuizComponent />} />
-            <Route path='/testResult/:finalResultJson' element={<ResultComponent />} />
+            <Route path='/:userEmail/:password' element={<QuizComponent />} />
             <Route path='/testResult' element={<ResultComponent />} />
           </Routes>
         </div>

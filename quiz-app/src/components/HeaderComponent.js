@@ -26,7 +26,6 @@ export const HeaderComponent = () => {
                         QUIZ
                     </Typography>
                 </span>
-                {/* <img src={OnlineTest} style={{ height: "3rem", marginTop: "6px" }}></img> */}
                 <h1 className="display-6">NavigationBar</h1>
                 <h1 className="display-6">AppName</h1>
             </header>
