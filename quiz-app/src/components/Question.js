@@ -4,21 +4,21 @@ import React, { } from 'react';
 
 export const Question = ({ questions, currQuestionIndex, setCurrQuestionIndex, finalResultJson, currentQuestionObj, setCurrentQuestionObj }) => {
 
-    const handleOptionSelect = (event, qid) => {
+    const handleOptionSelect = (option, qid) => {
         if (finalResultJson.some(options => options.qid === qid)) {
             finalResultJson.forEach(result => {
                 if (result.qid === qid) {
-                    result.selectedOption = event.target.value
+                    result.selectedOption = option;
                 }
             })
         } else {
             const result = {};
             result.qid = qid;
-            result.selectedOption = event.target.value;
+            result.selectedOption = option;
             finalResultJson.push(result);
             console.log(result);
         }
-        console.log(finalResultJson);
+        alert(JSON.stringify(finalResultJson));
     }
 
     const nextQuestion = () => {
@@ -34,17 +34,39 @@ export const Question = ({ questions, currQuestionIndex, setCurrQuestionIndex, f
         console.log("PREV QUES : ", currQuestionIndex - 1);
     }
 
+    console.log("CURRENT QUESTION OBJ  TEST ::", currentQuestionObj);
     return (
         <div className='border rounded p-3 mt-4'>
-            <p style={{ width: "30rem", height: "5rem", fontSize: "25px",overflow: "auto" }}>ID-{currentQuestionObj.qid}: {currentQuestionObj.questionStatement}</p>
-            <div style={{ display: 'flex', flexDirection: "column" }}>
-                <button className='form-control m-1' onClick={(e) => { handleOptionSelect(e, currentQuestionObj.qid) }} value={currentQuestionObj.options[0].option1}>{currentQuestionObj.options[0].option1}</button>
+            <p style={{ width: "40rem", height: "auto", minHeight: "2rem", maxHeight: "", fontSize: "25px", overflow: "auto" }}>ID-{currentQuestionObj.qid}: {currentQuestionObj.questionStatement}-{currentQuestionObj.questionType}</p>
 
-                <button className='form-control m-1' onClick={(e) => { handleOptionSelect(e, currentQuestionObj.qid) }} value={currentQuestionObj.options[0].option2}>{currentQuestionObj.options[0].option2}</button>
-
-                <button className='form-control m-1' onClick={(e) => { handleOptionSelect(e, currentQuestionObj.qid) }} value={currentQuestionObj.options[0].option3}>{currentQuestionObj.options[0].option3}</button>
-
-                <button className='form-control m-1' onClick={(e) => { handleOptionSelect(e, currentQuestionObj.qid) }} value={currentQuestionObj.options[0].option4}>{currentQuestionObj.options[0].option4}</button>
+            <div style={{ display: 'flex', flexDirection: "column", width: "inherit" }}>
+                {
+                    Object.keys(currentQuestionObj).length > 0 && currentQuestionObj.options.option.map((option, index) => {
+                        return (currentQuestionObj.questionType === "MCQ") ?
+                            // Question type - MCQ
+                            <button key={index} className='form-control m-1' style={{ width: "40rem", height: "auto", minHeight: "3rem" }}
+                                onClick={() => handleOptionSelect(option, currentQuestionObj.qid)}>
+                                <label style={{ width: "auto", height: "auto", minHeight: "3rem" }} >
+                                    {option}
+                                </label>
+                            </button>
+                            :
+                            //Question type - MAQ
+                            (currentQuestionObj.questionType === "MAQ") ?
+                                <div key={index} className='p-3' style={{ display: "flex" }}>
+                                    <input className='form-check-input' type="checkbox" name='option' value={option} />
+                                    <label className=' ms-4'>{option}</label>
+                                </div>
+                                :
+                                //Question type - Boolean
+                                <>
+                                    <div key={index} className='p-3' style={{ display: "flex" }}>
+                                        <input className='form-check-input' type="radio" name='answer' value={option} />
+                                        <label className=' ms-4'>{option}</label>
+                                    </div>
+                                </>
+                    })
+                }
 
             </div>
 

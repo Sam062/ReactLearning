@@ -19,9 +19,11 @@ export const HomeComponent = () => {
     }
 
     const onSubmit = (e) => {
+        console.log(email + ", " + password)
         e.preventDefault();
         validdateCandidateDetails(email, password).then(
             response => {
+                // alert(response.data)
                 if (response.data === 1) {
                     setError("");
                     navigate('/' + email + "/" + password);
@@ -40,7 +42,7 @@ export const HomeComponent = () => {
     return (
         <div className='mt-4' style={{ display: "flex", justifyContent: "space-around", marginBottom: "8rem" }}>
             <div style={{ width: "50%" }} className="text-muted p-2 mt-5 ms-5">
-                <label className='p-2 border rounded' style={{ backgroundColor: "cadetblue", color: "antiquewhite" }}>Please go through below steps before you preceed to test.</label>
+                <label className='p-2 border rounded' style={{ backgroundColor: "cadetblue", color: "antiquewhite" }}>Please go through below steps before you proceed to test.</label>
                 <ul>
                     <li>Do not refresh the page, you might loose the test</li>
                     <li>Do not switch tabs between the test</li>
@@ -58,8 +60,8 @@ export const HomeComponent = () => {
                         <label><strong>Duration:</strong> 1 hour</label>
                     </div>< br /> */}
 
-                    <input className='form-control m-1' type="email" placeholder='enter your email' required onChange={handleEmailChange} />
-                    <input className='form-control m-1' type="password" placeholder='enter provided password' required onChange={handlePasswordChange} />
+                    <input className='form-control m-1' type="email" placeholder='enter your email' value={email} required onChange={handleEmailChange} />
+                    <input className='form-control m-1' type="password" placeholder='enter provided password' value={password} required onChange={handlePasswordChange} />
 
                     {
                         error && <span className='text-danger m-1 ms-2 '>

@@ -10,9 +10,9 @@ export const useQuestionData = (userEmail, password) => {
                 console.log("RESPONSE FROM QUESTIOPNS :: ");
                 console.log(response.data);
                 console.log("Question LIST:: ");
-                console.log(response.data[0].testSet[0].questionsList);
+                console.log(response.data.testSet[0].questionList);
                 
-                setQuestions(response.data[0].testSet[0].questionsList);
+                setQuestions(response.data.testSet[0].questionList);
             }
         ).catch((response) => console.log("Error catched", response));
     }, []);

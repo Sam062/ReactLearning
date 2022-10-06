@@ -8,29 +8,20 @@ export const QuizComponent = () => {
     const { userEmail, password } = useParams();
     const questions = useQuestionData(userEmail, password);
     const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
-    const [isTestFinished, setTestFinished] = useState(false);
-    const [testResult, setTestResult] = useState(0);
     const [finalResultJson] = useState([]);
 
     const navigate = useNavigate();
 
 
     const [currentQuestionObj, setCurrentQuestionObj] = useState({
-        "qid": '',
         "questionStatement": "",
         "marks": '',
         "questionType": "",
         "questionCategory": "",
-        "options": [
-            {
-                "option1": "",
-                "option2": "",
-                "option3": "",
-                "option4": "",
-                "option5": null,
-                "option6": null
-            }
-        ]
+        "options": {
+            "optionId": "",
+            "option": []
+        }
     });
 
     useEffect(() => {
@@ -42,11 +33,12 @@ export const QuizComponent = () => {
     const handleSubmitTest = (e) => {
         e.preventDefault();
         if (finalResultJson && questions && finalResultJson.length === questions.length) {
-            setTestFinished(true);
             alert(JSON.stringify(finalResultJson))
         } else {
-            alert('Some of the questions are still unanswered, Are you sure to submit?');
-            setTestFinished(false);
+            if (window.confirm('Some of the questions are still unanswered, Are you sure to submit?')) {
+                alert(JSON.stringify(finalResultJson));
+                // navigate("/testResult");
+            }
         }
         navigate("/testResult");
     }

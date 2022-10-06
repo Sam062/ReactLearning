@@ -12,7 +12,7 @@ export function validdateCandidateDetails(candidateEmail, testCode) {
 
     const data = {
         "email": candidateEmail,
-        "code": testCode
+        "secretCode": testCode
     }
 
     return axios.post(BASE_URL + URI, data);
