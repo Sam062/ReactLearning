@@ -9,6 +9,7 @@ export const QuizComponent = () => {
     const questions = useQuestionData(userEmail, password);
     const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
     const [finalResultJson] = useState([]);
+    const [activeOption, setActiveOption] = useState([]);
 
     const navigate = useNavigate();
 
@@ -54,7 +55,7 @@ export const QuizComponent = () => {
                 <ol>
                     {
                         questions.map((ques, index) => {
-                            return <li key={ques.qid} className='list-styled'>
+                            return <li key={index + ques.qid} className='list-styled'>
                                 <Link to={"/question"} className='btn btn-light border m-1'
                                     style={{
                                         backgroundColor: currQuestionIndex === index ? "cadetblue" : "whitesmoke",
@@ -88,7 +89,7 @@ export const QuizComponent = () => {
                             <div style={{ display: 'flex', justifyContent: "center" }}>
 
                                 <Question currentQuestionObj={currentQuestionObj} setCurrentQuestionObj={setCurrentQuestionObj} questions={questions} currQuestionIndex={currQuestionIndex} setCurrQuestionIndex=
-                                    {setCurrQuestionIndex} finalResultJson={finalResultJson} />
+                                    {setCurrQuestionIndex} finalResultJson={finalResultJson} activeOption={activeOption} setActiveOption={setActiveOption} />
                             </div>
                         </>
                         : (
