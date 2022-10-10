@@ -1,45 +1,46 @@
 import { Button } from '@mui/material';
-import React, { } from 'react';
+import React, { useState } from 'react';
 
 
-export const Question = ({ questions, currQuestionIndex, setCurrQuestionIndex, finalResultJson, currentQuestionObj, setCurrentQuestionObj, activeOption, setActiveOption }) => {
+export const Question = ({ questions, currQuestionIndex, setCurrQuestionIndex, finalResultJson, setFinalResultJson, currentQuestionObj, setCurrentQuestionObj, activeOption, setActiveOption }) => {
+    const [checked, setChecked] = useState([]);
 
     const handleCheckbox = (option, qid) => {
-        let val = option + ", ";
-        handleOptionSelect(val, qid);
+        if (!checked.some(op => op === option)) {
+            checked.push(option);
+        } else {
+            for (let i = 0; i < checked.length; i++) {
+                if (checked[i] === option) {
+                    checked.splice(i, 1);
+                }
+            }
+            // setChecked(checked);
+        }
+        console.log("OPTION :: ", option);
+        console.log("CHECKED :: ", checked);
+        handleOptionSelect(checked, qid);
     }
 
-    const handleOptionSelect = (option, qid, index) => {
+    const handleOptionSelect = (option, qid) => {
         if (finalResultJson.some(options => options.qid === qid)) {
-            finalResultJson.forEach(result => {
+            let temp = [...finalResultJson];
+            temp.forEach(result => {
                 if (result.qid === qid) {
                     result.selectedOption = option;
                 }
+                setFinalResultJson(temp)
             })
         } else {
             const result = {};
             result.qid = qid;
             result.selectedOption = option;
-            finalResultJson.push(result);
-            console.log(result);
+            setFinalResultJson(prevState => [...prevState, result])
         }
-        if (activeOption.some(e => e.qid === qid)) {
-            let temp = [...activeOption];
-            temp.forEach(e => {
-                if (qid === e.qid) {
-                    e.index = index;
-                    setActiveOption(temp)
-                }
-            })
-        } else {
-            setActiveOption(e => [...e, { index, qid }])
-        }
-        // console.log(JSON.stringify(finalResultJson));
     }
 
     const nextQuestion = () => {
         currQuestionIndex < questions.length - 1 ? setCurrQuestionIndex(currQuestionIndex + 1) : setCurrQuestionIndex(currQuestionIndex);
-        console.log("NEXT QUES : ", currQuestionIndex + 1);
+        // console.log("NEXT QUES : ", currQuestionIndex + 1);
         setCurrentQuestionObj(questions[currQuestionIndex + 1]);
 
     };
@@ -47,11 +48,11 @@ export const Question = ({ questions, currQuestionIndex, setCurrQuestionIndex, f
     const previousQuestion = () => {
         (currQuestionIndex > 0 && currQuestionIndex <= questions.length ? setCurrQuestionIndex(currQuestionIndex - 1) : setCurrQuestionIndex(currQuestionIndex));
         setCurrentQuestionObj(questions[currQuestionIndex - 1]);
-        console.log("PREV QUES : ", currQuestionIndex - 1);
+        // console.log("PREV QUES : ", currQuestionIndex - 1);
     }
 
-    console.log("CURRENT QUESTION OBJ  TEST ::", currentQuestionObj);
-    console.log(activeOption);
+    // console.log("CURRENT QUESTION OBJ  TEST ::", currentQuestionObj);
+    console.log("FINAL RESULT JSON  ::", finalResultJson);
     return (
         <div className='border rounded p-3 mt-4'>
             <p style={{ width: "40rem", height: "auto", minHeight: "2rem", maxHeight: "", fontSize: "25px", overflow: "auto" }}>ID-{currentQuestionObj.qid}: {currentQuestionObj.questionStatement}-{currentQuestionObj.questionType}</p>
@@ -60,15 +61,18 @@ export const Question = ({ questions, currQuestionIndex, setCurrQuestionIndex, f
                 {
                     Object.keys(currentQuestionObj).length > 0 && currentQuestionObj.options.option.map((option, index) => {
                         return (currentQuestionObj.questionType === "MAQ") ?
-                            <div key={index + currentQuestionObj.qid} className='p-3' style={{ display: "flex" }}>
+                            <div key={index + currentQuestionObj.qid} className='p-2 m-1 border rounded '
+                                onClick={() => handleCheckbox(option, currentQuestionObj.qid)}
+                                style={checked.some(op => op === option) ? { display: "flex", backgroundColor: "cadetblue", color: "antiquewhite" } : { display: "flex" }}>
                                 <input className='form-check-input' type="checkbox" name='option'
-                                    onClick={() => handleCheckbox(option, currentQuestionObj.qid)} />
+                                    defaultChecked={checked.some(op => op === option)}
+                                />
                                 <label className=' ms-4'>{option}{activeOption}</label>
                             </div>
                             :
                             //Question type - Boolean
                             <div key={index + currentQuestionObj.qid} className='p-2 m-1 border rounded'
-                                onClick={() => handleOptionSelect(option, currentQuestionObj.qid, index)}
+                                onClick={() => handleOptionSelect(option, currentQuestionObj.qid)}
                                 style={finalResultJson.some(e => e.qid === currentQuestionObj.qid && e.selectedOption === option) ? {
                                     display: "flex", backgroundColor: "cadetblue", color: "antiquewhite"
                                 } : { display: "flex" }}>

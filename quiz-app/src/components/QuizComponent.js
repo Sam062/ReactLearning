@@ -7,12 +7,11 @@ import { useQuestionData } from './useQuestionData';
 export const QuizComponent = () => {
     const { userEmail, password } = useParams();
     const questions = useQuestionData(userEmail, password);
-    const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
-    const [finalResultJson] = useState([]);
-    const [activeOption, setActiveOption] = useState([]);
-
     const navigate = useNavigate();
 
+    const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
+    const [finalResultJson, setFinalResultJson] = useState([]);
+    const [activeOption, setActiveOption] = useState([]);
 
     const [currentQuestionObj, setCurrentQuestionObj] = useState({
         "questionStatement": "",
@@ -58,9 +57,10 @@ export const QuizComponent = () => {
                             return <li key={index + ques.qid} className='list-styled'>
                                 <Link to={"/question"} className='btn btn-light border m-1'
                                     style={{
-                                        backgroundColor: currQuestionIndex === index ? "cadetblue" : "whitesmoke",
+                                        backgroundColor: currQuestionIndex === index ? "cadetblue" : "",
                                         color: currQuestionIndex === index ? "antiquewhite" : "inherit",
-                                        textAlign: "left"
+                                        textAlign: "left",
+
                                     }}
                                     onClick={() => handleQuesClick(ques, index)}>ID-{ques.qid}: {ques.questionStatement}</Link>
                             </li>
@@ -89,7 +89,7 @@ export const QuizComponent = () => {
                             <div style={{ display: 'flex', justifyContent: "center" }}>
 
                                 <Question currentQuestionObj={currentQuestionObj} setCurrentQuestionObj={setCurrentQuestionObj} questions={questions} currQuestionIndex={currQuestionIndex} setCurrQuestionIndex=
-                                    {setCurrQuestionIndex} finalResultJson={finalResultJson} activeOption={activeOption} setActiveOption={setActiveOption} />
+                                    {setCurrQuestionIndex} finalResultJson={finalResultJson} setFinalResultJson={setFinalResultJson} activeOption={activeOption} setActiveOption={setActiveOption} />
                             </div>
                         </>
                         : (
