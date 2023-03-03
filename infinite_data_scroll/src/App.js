@@ -6,7 +6,7 @@ import DataComponent from "./DataComponent";
 
 function App() {
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([{}]);
   const [page, setPage] = useState(1);
 
   const handleInfiniteScroll = () => {
@@ -17,10 +17,12 @@ function App() {
     try {
       if (window.innerHeight + document.documentElement.scrollTop + 1 > document.documentElement.scrollHeight) {
         setPage((prev) => prev + 1);
+        data.push({});
       }
-      if (window.innerHeight + document.documentElement.scrollTop === window.innerHeight) {
-        setPage((prev) => (prev < 2) ? 1 : (prev - 1));
-      }
+      // if (window.innerHeight + document.documentElement.scrollTop === window.innerHeight) {
+      //   setPage((prev) => (prev < 2) ? 1 : (prev - 1));
+      //   data.pop();
+      // }
     } catch (error) {
       console.log(error);
     }
