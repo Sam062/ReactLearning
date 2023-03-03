@@ -10,19 +10,20 @@ function App() {
   const [page, setPage] = useState(1);
 
   const handleInfiniteScroll = () => {
-    console.log('Scroll height : ' + document.documentElement.scrollHeight);
-    console.log('inner height : ' + window.innerHeight);
+    // console.log('Scroll height : ' + document.documentElement.scrollHeight);
+    // console.log('inner height : ' + window.innerHeight);
     console.log('Scroll Top : ' + document.documentElement.scrollTop);
 
     try {
       if (window.innerHeight + document.documentElement.scrollTop + 1 > document.documentElement.scrollHeight) {
         setPage((prev) => prev + 1);
       }
+      if (window.innerHeight + document.documentElement.scrollTop === window.innerHeight) {
+        setPage((prev) => (prev < 2) ? 1 : (prev - 1));
+      }
     } catch (error) {
       console.log(error);
     }
-
-
   }
   useEffect(() => {
     window.addEventListener('scroll', handleInfiniteScroll);
@@ -34,7 +35,6 @@ function App() {
 
   return (
     <div>
-      Infinite Data Scroll
       <DataComponent data={data} page={page} />
     </div>
   );
