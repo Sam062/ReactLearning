@@ -1,17 +1,17 @@
+import { useReducer } from 'react';
 import './App.css';
-import { useReducer } from "react";
+
 
 const initialState = 0;
 
 const reducer = (state, action) => {
-  console.log(state, action);
-  if (action.type === "INCREMENT") {
+  if (action.task === "INCR") {
     return state + 1;
   }
-  if (action.type === "DECREMENT") {
+  if (action.task === "DECR") {
     return state - 1;
   }
-  return state;
+  return 0;
 
 }
 
@@ -21,10 +21,10 @@ function App() {
 
   return (
     <>
-
-      <button onClick={() => dispatch({ type: "DECREMENT" })}>Minus</button>
+      <button onClick={() => dispatch({ task: "INCR" })}>Plus</button>
       <h1>{state}</h1>
-      <button onClick={() => dispatch({ type: "INCREMENT" })}>Plus</button>
+      <button onClick={() => dispatch({ task: "DECR" })}>Minus</button>
+
     </>
   );
 }
